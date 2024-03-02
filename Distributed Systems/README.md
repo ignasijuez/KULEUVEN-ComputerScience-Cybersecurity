@@ -5,3 +5,4 @@ Tips and tricks:
 - Recomendation to do the optional lab since you can skip one question on the final exam
 - As always ask for past exams and solutions to the natives or vtk
 - Will not post the solutions to the labs until ratakes end
+- Mandatory readings can help but did not read any

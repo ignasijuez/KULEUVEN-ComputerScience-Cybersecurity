@@ -1,4 +1,7 @@
 # KULEUVEN-ComputerScience-Cybersecurity-2023/24
+
+Everything can be found on toledo or is provided by the professors
+
 First semester subjects:
   - Comparative Programming Languages
   - Cryptography and Network Security

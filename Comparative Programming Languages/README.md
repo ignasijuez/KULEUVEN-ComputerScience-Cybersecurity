@@ -4,3 +4,4 @@ Tips and tricks:
 - Do not let project to last minute, start soon and get good grade
 - Exam as always look at old exams and their solutions from the natives and vtk
 - Will not upload the project for respect, once they change it I will do
+- Mandatory readings can help but did not read any

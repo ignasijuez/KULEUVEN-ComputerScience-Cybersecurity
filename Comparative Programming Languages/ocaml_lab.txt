@@ -1,0 +1,136 @@
+let rec last lst = 
+match lst with 
+| [] -> None
+| [x] -> Some x
+| _ :: rest -> last rest;;
+-------------------------------------------------------
+let is_palindrome lst =
+  let rec reverse lst =
+    match lst with
+    | [] -> []
+    | head :: tail -> (reverse tail) @ [head]
+  in
+  lst = reverse lst;;
+-------------------------------------------------------
+let rec map f lst =
+  match lst with
+  | [] -> []
+  | head :: tail -> (f head) :: map f tail
+-------------------------------------------------------
+type con = Wired | Wireless | Bluetooth;;
+-------------------------------------------------------
+type netcon = {
+    active : bool;
+    con_type : con option;
+    dst_ip : string;
+    bandwidth : int;
+    date : string; };;
+-------------------------------------------------------
+type netcon =
+  | Inactive
+  | Active of {
+    connection_type: con;
+    destination_ip: string;
+    bandwidth: int;
+    connection_date: string;
+    };;
+-------------------------------------------------------
+type 'a rose_tree =
+  | RoseNode of 'a * 'a rose_tree list
+-------------------------------------------------------
+let rec most_beautiful_rose tree =
+  match tree with
+  | RoseNode (_, children) ->
+    let subtree_with_max_children =
+      List.fold_left
+        (fun (maxBranching, maxSubtree) child ->
+          let childBranching = count_branching_factor child in
+          if childBranching > maxBranching then (childBranching, child) else (maxBranching, maxSubtree))
+        (-1, RoseNode (None, [])) children
+    in
+    snd subtree_with_max_children
+and count_branching_factor tree =
+  match tree with
+  | RoseNode (_, children) -> 1 + List.fold_left (fun count child -> count + count_branching_factor child) 0 children
+-------------------------------------------------------
+type con = Wired | Wireless | Bluetooth
+type netcon =
+        | Inactive
+        | Active of {
+                connection_type: con;
+                destination_ip: string;
+                bandwidth: int;
+                connection_date: string;
+                }
+
+let create () =
+        Active {
+                connection_type = Wired;
+                destination_ip = "192.0.0.0";
+                bandwidth = 25;
+                connection_date = "23/01/2023"
+        };;
+
+let establish netcon1 ip_dst =
+  match netcon1 with
+| Active state -> Active {state with destination_ip = ip_dst}; 
+    //Active state: extracts state record from Active, so now satate is
+    //like Active, then constructs a new Active variant with the same 
+    //state record but with the destination_ip field updated to the value of ip_dst. 
+| Inactive -> netcon1;
+    //Return the same netcon1
+
+let bandwidth netcon1 bw =
+  match netcon1 with
+| Active state -> Active {state with bandwidth = bw};
+| Inactive -> netcon1;;
+
+let disconnect netcon1 =    
+  match netcon1 with
+| Active _ -> Inactive;
+| Inactive -> netcon1;;
+
+(1rst version)
+let string_of_netcon netcon1 =
+  match netcon1 with
+  | Active state -> "Active"
+  | Inactive -> "Inactive"
+
+  PRINTING TESTS:
+  let connection1 = Inactive in
+  let connection2 = Active {
+  connection_type = Wireless;
+  destination_ip = "192.168.1.1";
+  bandwidth = 100;
+  connection_date = "2023-10-23"
+  } in
+  print_endline (string_of_netcon connection1);  (* Output: "Inactive" *)
+  print_endline (string_of_netcon connection2);  (* Output: "Active" *)
+
+let string_of_con con1 = 
+match con1 with
+| Wired -> "Wired";
+| Wireless -> "Wireless";
+| Bluetooth -> "Bluetooth";;
+
+(2nd version WITH LET)
+let string_of_netcon netcon1 =
+  match netcon1 with
+| Active state -> let connection_type_str = string_of_con state.connection_type in 
+"type_con: "^connection_type_str^"; destination_ip: "^state.destination_ip^"; bandwidth: "^(string_of_int state.bandwidth)^"; connection_date: "^state.connection_date;
+| Inactive -> "Inactive";;
+
+(3rd version NO LET)
+let string_of_netcon netcon1 =
+  match netcon1 with
+| Active state -> 
+"type_con: "^(string_of_con state.connection_type)^"; destination_ip: "^state.destination_ip^"; bandwidth: "^(string_of_int state.bandwidth)^"; connection_date: "^state.connection_date;
+| Inactive -> "Inactive";;
+
+
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+-------------------------------------------------------
+
+
